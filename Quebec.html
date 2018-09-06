@@ -70,13 +70,8 @@
 <br>
 
 <p class="labels">División: &#160
-<select id="divisions" onChange="getCredits(); sumPrices(); getRemaining(); printDorsal();">
-<option value="0" selected="selected">Selecciona tu división</option>
+<select id="divisions" disabled onChange="getCredits(); sumPrices(); getRemaining(); printDorsal();">
 <option value="2000">Primera división</option>
-<option value="2000">Segunda división</option>
-<option value="2000">Tercera división</option>
-<option value="2000">Cuarta división</option>
-<option value="2000">Quinta división</option>
 </select></p>
 <p class="labels">Usuario:&#160
 <input id="user"></input></p>
@@ -1645,7 +1640,7 @@
 <option value="200" dorsal="1036">Zukowsky, Nick: 200</option>
 </tr><tr>
 <td class="labels">10º :&#160</td>
-<td><select id="reserve" onChange="getCredits(); sumPrices(); getRemaining(); printDorsal();">
+<td><select id="rider10" onChange="getCredits(); sumPrices(); getRemaining(); printDorsal();">
 <option value="0" selected="selected">Selecciona un corredor</option>
 <option value="200" dorsal="640">Anderson, Ryan: 200</option>
 <option value="200" dorsal="571">Arcas, Jorge: 200</option>
@@ -1868,7 +1863,8 @@
 		var price7 = parseInt(document.getElementById('rider7').value);
 		var price8 = parseInt(document.getElementById('rider8').value);
 		var price9 = parseInt(document.getElementById('rider9').value);
-		totalPrice +=  price1 + price2 + price3 + price4 + price5 + price6 + price7 + price8 + price9; 
+		var price10 = parseInt(document.getElementById('rider10').value);
+		totalPrice +=  price1 + price2 + price3 + price4 + price5 + price6 + price7 + price8 + price9 + price10; 
 		var rider1Dorsal = document.getElementById('rider1').options[document.getElementById('rider1').selectedIndex].getAttribute('dorsal');
 		var rider2Dorsal = document.getElementById('rider2').options[document.getElementById('rider2').selectedIndex].getAttribute('dorsal');
 		var rider3Dorsal = document.getElementById('rider3').options[document.getElementById('rider3').selectedIndex].getAttribute('dorsal');
@@ -1878,7 +1874,7 @@
 		var rider7Dorsal = document.getElementById('rider7').options[document.getElementById('rider7').selectedIndex].getAttribute('dorsal');
 		var rider8Dorsal = document.getElementById('rider8').options[document.getElementById('rider8').selectedIndex].getAttribute('dorsal');
 		var rider9Dorsal = document.getElementById('rider9').options[document.getElementById('rider9').selectedIndex].getAttribute('dorsal');
-		var reserveDorsal = document.getElementById('reserve').options[document.getElementById('reserve').selectedIndex].getAttribute('dorsal');
+		var rider10Dorsal = document.getElementById('rider10').options[document.getElementById('rider10').selectedIndex].getAttribute('dorsal');
 		var rider1Name = document.getElementById('rider1').options[document.getElementById('rider1').selectedIndex].text;
 		var rider2Name = document.getElementById('rider2').options[document.getElementById('rider2').selectedIndex].text;
 		var rider3Name = document.getElementById('rider3').options[document.getElementById('rider3').selectedIndex].text;
@@ -1888,7 +1884,7 @@
 		var rider7Name = document.getElementById('rider7').options[document.getElementById('rider7').selectedIndex].text;
 		var rider8Name = document.getElementById('rider8').options[document.getElementById('rider8').selectedIndex].text;
 		var rider9Name = document.getElementById('rider9').options[document.getElementById('rider9').selectedIndex].text;
-		var reserveName = document.getElementById('reserve').options[document.getElementById('reserve').selectedIndex].text;
+		var rider10Name = document.getElementById('rider10').options[document.getElementById('rider10').selectedIndex].text;
 		if(rider1Dorsal)
 		{
 			arrayDorsal.push(rider1Dorsal);
@@ -1933,22 +1929,17 @@
 		{
 			arrayDorsal.push(rider9Dorsal);
 			arrayCyclists.push(rider9Name);
-			
 		}
-		if(reserveDorsal)
+		if(rider10Dorsal)
 		{
-			arrayDorsal.push(reserveDorsal);
-			arrayCyclists.push(reserveName);
+			arrayDorsal.push(rider10Dorsal);
+			arrayCyclists.push(rider10Name);
 		}
 		if(arrayDorsal)
 		{
 		
 			var arrayDorsalSorted = arrayDorsal.slice();
 			arrayDorsalSorted.sort(function(a, b){return b-a});
-			if(reserveDorsal)
-			{
-				arrayDorsalSorted.length = arrayDorsalSorted.length - 1;
-			}
 			for (i=0; i < arrayDorsalSorted.length - 1; i++)
 			{
 				if (arrayDorsalSorted[i] == arrayDorsalSorted[i+1])
@@ -1969,7 +1960,7 @@
 		}
 	}
 	function printDorsal(){
-		document.getElementById('dorsalList').innerHTML = arrayDorsal.join("\n") + "\n\n" + arrayCyclists.join("\n");
+		document.getElementById('dorsalList').innerHTML = "Quebec" + "\n\n" + arrayDorsal.join("\n") + "\n\n" + arrayCyclists.join("\n");
 	}
 	function sendMail()
 	{
@@ -1987,7 +1978,7 @@
 			var body = arrayDorsal.join("%0A") + "%0A%0A" + arrayCyclists.join("%0A");
 	    	var subject = document.getElementById('user').value;
 	    	var email = "grandesclasicas@gmail.com";
-	    	window.location.href = 'mailto:'+email+'?subject=Equipo%20Usuario:%20'+subject+'&body='+body;
+	    	window.location.href = 'mailto:'+email+'?subject=Quebec%20:%20Equipo%20Usuario:%20'+subject+'&body='+body;
 		}
     }
     function checkDivision()
@@ -2026,7 +2017,8 @@
 		var price7 = parseInt(document.getElementById('rider7').value);
 		var price8 = parseInt(document.getElementById('rider8').value);
 		var price9 = parseInt(document.getElementById('rider9').value);
-    	if( price1 == 0 || price2 == 0 || price3 == 0 || price4 == 0 || price5 == 0 || price6 == 0 || price7 == 0 || price8 == 0 || price9 == 0 )
+	    	var price10 = parseInt(document.getElementById('rider10').value);
+    	if( price1 == 0 || price2 == 0 || price3 == 0 || price4 == 0 || price5 == 0 || price6 == 0 || price7 == 0 || price8 == 0 || price9 == 0 || price10 == 0 )
     	{
     		alert("Lista de corredores incompleta.");
     		return false;
